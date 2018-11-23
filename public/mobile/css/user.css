@@ -1,65 +1,89 @@
-body{
-    background: #fff;
-}
-
-.form_box{
+.p10{
     padding: 10px;
 }
-
-.btn_login,
-.btn_outLogin,
-.btn_register,
-.btn_submit,
-.btn_updatePass
-{
+/*cart*/
+.lt_proImg{
+    width: 60px;
+    height: 60px;
+    float:left;
+}
+.lt_proImg img{
     width: 100%;
-    margin: 20px 0;
+    height: 100%;
+    display: block;
 }
-.btn_disabled{
-    background: #999;
-    border-color: #999;
-}
-
-[type="text"][name="code"]{
-    width: 60%;
-    float: left;
-}
-.mui-input-row .btn_getCode{
-    width: 35%;
-    float: left;
-    margin-left: 5%;
-    height: 40px;
-}
-
-
-
-.cz_text{
-    font-size: 12px;
-    height: 20px;
-    line-height: 20px;
-}
-.cz_text [type=checkbox]{
-    vertical-align: middle;
-}
-.cz_text a{
-    float: right;
-}
-.bgg{
-    background: #efeff4;
-}
-.p20{
+.lt_proInfo{
+    overflow: hidden;
     padding: 0 10px;
 }
-.delivery{
+.lt_proInfo input{
+    position: absolute;
+    left: 0;
+    bottom: 2px;
+}
+.lt_proInfo .name{
+    color: #333;
+    margin-bottom: 5px;
+}
+.lt_proInfo .price{
+    color: red;
+}
+.lt_proInfo .oldPrice{
+    text-decoration: line-through;
     font-size: 12px;
 }
-.address{
-    font-size: 12px;
-    color: #ccc;
+.lt_proInfo .num{
+    float: right;
+}
+
+.lt_cart{
+    position: absolute;
+    left: 0;
+    bottom: 55px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
+    border-top: 1px solid #ccc;
     width: 100%;
-    white-space: normal;
-    padding-right:20px;
+    background: #f5f5f5;
+    z-index: 997;
 }
-.btn_link {
-    border-radius: 0;
+.lt_cart > div{
+    font-size: 12px;
+    color: red;
+    font-weight: bold;
+}
+.lt_cart > a{
+    position: absolute;
+    background: red;
+    right: 0;
+    top: 0;
+    padding: 0 15px;
+    font-size: 12px;
+    color: #fff;
+}
+.lt_content_cart{
+    padding-bottom: 85px;
+}
+
+.lt_cart_edit{
+    text-align: left;
+}
+.lt_cart_edit strong{
+    display: inline-block;
+    width: 45px;
+}
+.lt_cart_edit span{
+    display: inline-block;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    margin-right: 3px;
+    margin-bottom: 5px;
+    padding: 0 5px;
+}
+.lt_cart_edit span.now{
+    background: #069;
+}
+.lt_cart_edit .mui-numbox{
+    height: 26px;
 }

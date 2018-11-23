@@ -1,48 +1,66 @@
-/**
- * ITCAST WEB
- * Created by zhousg on 2017/1/2.
- */
+/*初始化区域滚动组件*/
+mui('.mui-scroll-wrapper').scroll({
+    indicators:false
+});
+
 $(function(){
-    mui('.mui-scroll-wrapper').scroll({
-        scrollY: true, //是否竖向滚动
-        scrollX: false, //是否横向滚动
-        startX: 0, //初始化时滚动至x
-        startY: 0, //初始化时滚动至y
-        indicators: false, //是否显示滚动条
-        deceleration:0.0006, //阻尼系数,系数越小滑动越灵敏
-        bounce: true //是否启用回弹
-    });
-    mui.init({
-        pullRefresh: {
-            container: '.mui-scroll-wrapper',
-            down: {
-                auto:true,
-                callback: function(){
-                    var that = this;
-                    getProductData(function(data){
-                        /*渲染*/
-                        $('#product_box').html(template('productTpl',{model:data}));
-                        /*结束刷新状态*/
-                        that.endPulldownToRefresh();
-                        /*初始化轮播图*/
-                        mui('.mui-slider').slider({ interval:3000});
-                        /*图片懒加载*/
-                        mui('.p_detail').imageLazyload({
-                            placeholder: '/mobile/images/none.jpg'
-                        });
-                    })
-                }
-            }
-        }
+    /*
+     * 初始渲染
+     * 1.获取数据
+     * 2.动态模版渲染
+     * */
+    var urlParams = lt.getUrlParams();
+    var render = function(){
+        /*获取id*/
+        getProductDetailData({
+            id:urlParams.productId
+        },function(data){
+            $('.mui-scroll').html(template('detail',data));
+            /*轮播图的初始化*/
+            mui('.mui-slider').slider({
+                interval:4000
+            });
+            /*数量选择初始化*/
+            mui('.mui-numbox').numbox();
+        });
+    };
+    render();
+
+    /*重新加载*/
+    $('.mui-icon-reload').on('tap',function(){
+        $('.mui-scroll').html('<div class="loading"><span class="mui-icon mui-icon-spinner"></span></div>');
+        render();
     });
 
-    $('body').on('tap','.btn_addCart',function(){
-        if(window.addCarting == 1) return false;
+    /*尺码选择*/
+    $('.mui-scroll').on('tap','.size',function(){
+        var currSize = $(this);
+        $('.size').removeClass('now');
+        currSize.addClass('now');
+    });
+
+    /*数量选择*/
+
+    /*
+    加入购物车
+    1.需要获取  数据（商品id 尺码 数量） 校验数据
+    2.通过接口发送给后台 ajax
+    3.成功  提示用户  添加成功  弹出一个对话框  去购物车查看
+    4.失败  提示用户  添加失败
+    5.防止二次提交
+    */
+    $('.mui-btn-danger').on('tap',function(){
+        /*6.防重复提交*/
+        if(window.addCarting){
+            return false;
+        }
+        /*1.需要获取数据*/
         var data = {
-            productId:window.productId,
-            size:$('.btn_size.now').html(),
-            num:parseInt($('.p_number input').val())
+            productId:urlParams.productId,
+            size:$('.size.now').html(),
+            num:$('.mui-input-numbox').val()
         };
+        /*2.数据校验*/
         if(!data.productId){
             mui.toast('商品异常');
             return false;
@@ -55,68 +73,54 @@ $(function(){
             mui.toast('请选择数量');
             return false;
         }
-        addCart(data,function(){
-            window.addCarting = 0;
-            mui.confirm('添加成功，去购物车看看？', '温馨提示', ['是', '否'], function(e) {
-                if (e.index == 0) {
-                    location.href = LeTao.CART_URL;
-                } else {
-                    //TODO
+        /*3.发送后台*/
+        lt.ajaxFilter({
+            type:'post',
+            url:'/cart/addCart',
+            data:data,
+            dataType:'json',
+            beforeSend:function(){
+                window.addCarting = true;
+            },
+            success:function(data){
+                /*4.成功*/
+                if(data.success){
+                    mui.confirm('加入购物车成功，去购物车看看？', '温馨提示', ['去看看','继续浏览'], function(e) {
+                        if (e.index == 0) {
+                            /*按了第一个按钮*/
+                            location.href = 'user/cart.html';
+                        } else {
+                            /*按了其他按钮 暂时处理*/
+                        }
+                    });
                 }
-            })
-        });
-    }).on('tap','.btn_pay',function(){
-        mui.toast('未实现');
-    }).on('tap','.btn_size',function(){
-        var $this = $(this);
-        $('.btn_size').removeClass('now');
-        $this.addClass('now');
-
-    }).on('tap','.p_number span',function(){
-        var $this = $(this),$input = $('.p_number input');
-        var num = parseInt($input.val()),max = $input.attr('data-max');
-        if($this.hasClass('jian')){
-            num >0 && $input.val(num-1);
-        }
-        if($this.hasClass('jia')){
-            if(num < max){
-                $input.val(num+1);
-            }else{
-                mui.toast('没有库存了');
+                /*5.失败*/
+                else{
+                    mui.toast('添加失败，请重试！');
+                }
+                window.addCarting = false;
+            },
+            error:function(){
+                mui.toast('网络繁忙！');
+                window.addCarting = false;
             }
-        }
+        });
+
     });
 
 });
-var getProductData = function(callback){
-    window.productId = LeTao.getUrlParam('productId');
-    LeTao.ajax({
+
+/*获取商品详情信息*/
+var getProductDetailData = function(params,callback){
+    $.ajax({
         type:'get',
         url:'/product/queryProductDetail',
-        data:{id:window.productId},
+        data:params,
         dataType:'json',
         success:function(data){
-            callback && callback(data);
-        },
-        error:function(){
-            mui('.mui-scroll-wrapper').pullRefresh().endPulldownToRefresh();
+            setTimeout(function(){
+                callback && callback(data);
+            },500);
         }
-    })
-};
-var addCart = function(data,callback){
-    LeTao.ajax({
-        type:'post',
-        url:'/cart/addCart',
-        data:data,
-        dataType:'json',
-        beforeSend:function(){
-            window.addCarting = true;
-        },
-        success:function(data){
-            callback && callback(data);
-        },
-        error:function(){
-            mui.toast('服务器繁忙');
-        }
-    })
+    });
 };

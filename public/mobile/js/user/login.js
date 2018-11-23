@@ -1,42 +1,54 @@
-/**
- * ITCAST WEB
- * Created by zhousg on 2017/1/2.
- */
 $(function(){
-    $('body').on('tap','.btn_login',function(){
-        var params = {
-            username: $.trim($('[name="name"]').val()),
-            password: $.trim($('[name="pass"]').val())
-        };
-        if(!params.username || !params.password){
-            mui.toast('请输入用户名或密码');
+    $('.mui-btn-primary').on('tap',function(){
+        if(window.login){
             return false;
         }
-        getLoginData(params,function(data){
-            if(data.success){
-                var returnUrl = LeTao.USER_URL;
-                if(location.search){
-                    returnUrl = location.search.replace('?returnUrl=','');
+        /*获取数据*/
+        var data = {
+            username:$('[name="username"]').val(),
+            password:$('[name="password"]').val()
+        };
+        /*校验数据*/
+        if(!data.username){
+            mui.toast('请输入用户名');
+            return false;
+        }
+        if(!data.password){
+            mui.toast('请输入密码');
+            return false;
+        }
+        /*发送数据*/
+        $.ajax({
+            type:'post',
+            url:'/user/login',
+            data:data,
+            datType:'json',
+            beforeSend:function(){
+                window.login = true;
+            },
+            success:function(data){
+                if(data.success){
+                    /*1.回跳*/
+                    if(location.search && location.search.indexOf('?returnUrl=') > -1){
+                        var returnUrl = location.search.replace('?returnUrl=','');
+                        location.href = returnUrl;
+                    }
+                    /*2.首页*/
+                    else{
+                        location.href = '/m/user/index.html';
+                    }
+                }else{
+                    mui.toast('登录失败！');
                 }
-                location.href = returnUrl;
-            }else if(data.error){
-                mui.toast(data.message);
+                window.login = false;
+            },
+            error:function(){
+                mui.toast('服务繁忙！');
+                window.login = false;
             }
-            $('.btn_login').html('登录');
         });
+        /*如果成功*/
+        /*如果失败*/
+        /*防止重复*/
     });
 });
-var getLoginData = function(data,callback){
-    LeTao.ajax({
-        type:'post',
-        url:'/user/login',
-        data:data,
-        dataType:'json',
-        beforeSend:function(){
-            $('.btn_login').html('正在登录...');
-        },
-        success:function(data){
-            callback && callback(data);
-        }
-    });
-}

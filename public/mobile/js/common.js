@@ -1,83 +1,44 @@
-/**
- * ITCAST WEB
- * Created by zhousg on 2016/12/27.
- */
-if(!LeTao) var LeTao = {};
-/*å¸¸ç”¨åœ°å€*/
-LeTao.LOGIN_URL = '/mobile/user/login.html';
-LeTao.SEARCH_LIST_URL = '/mobile/searchList.html';
-LeTao.CART_URL = '/mobile/cart.html';
-LeTao.USER_URL = '/mobile/user/';
-
-/*å…¨å±€ajaxå·¥å…·å‡½æ•°*/
-LeTao.ajax = function(options){
-    if(!options.url) return false;
+/*·â×°¹¤¾ßº¯Êı*/
+window.lt = {};
+/*»ñÈ¡µØÖ·À¸²ÎÊı*/
+lt.getUrlParams = function(){
+    /*ÄÃµ½ÒÔgetĞÎÊ½´«µİµÄµØÖ·À¸µÄÊı¾İ ?key=1&name=10*/
+    var search = location.search;
+    /*ĞèÒª°Ñ×Ö·û´®×ª»»³É¶ÔÏó  ±ãÓÚ¿ª·¢Ê¹ÓÃ*/
+    var params = {};
+    /*Èç¹ûÓĞ£¿´ú±íÓĞ²ÎÊı*/
+    /*Ã»ÓĞÎÊºÅ¾ÍÃ»ÓĞ²ÎÊı*/
+    if(search.indexOf('?') == 0){
+        search = search.substr(1);
+        var arr = search.split('&');
+        for(var i = 0 ; i < arr.length ; i++){
+            /*itemArr name=10  ----> [name,10]*/
+            var itemArr = arr[i].split('=');
+            params[itemArr[0]] = itemArr[1];
+        }
+    }
+    return params;
+}
+/*µÇÂ¼À¹½Ø  ·²ÊÂĞèÒªµÇÂ¼²Ù×÷ µ÷ÓÃ*/
+lt.ajaxFilter = function(options){
     $.ajax({
-        url:options.url,
-        type:options.type||'post',
-        data:options.data||'',
+        type:options.type||'get',
+        url:options.url||location.pathname,
+        data:options.data||{},
         dataType:options.dataType||'json',
-        timeout:options.timeout||50000,
         beforeSend:function(){
             options.beforeSend && options.beforeSend();
         },
         success:function(data){
-            /*400ä»£è¡¨æœªç™»å½•*/
-            if(data && data.error == '400'){
-                window.location.href = LeTao.LOGIN_URL+'?returnUrl='+decodeURI(location.href);
-                return false;
-            }
-            setTimeout(function(){
+            /* error Èç¹û  400  ´ú±íÎ´µÇÂ¼ È¥µÇÂ¼Ò³  Ğ¯´øurl*/
+            if(data.error == 400){
+                location.href = '/m/user/login.html?returnUrl='+location.href
+            }else{
                 options.success && options.success(data);
-            },1000);
+            }
         },
-        error:function(xhr,type,errorThrown){
-            mui.toast('æœåŠ¡ç¹å¿™');
-            options.error && options.error({xhr:xhr,type:type,errorThrown:errorThrown});
+        error:function(){
+            options.error && options.error();
         }
     });
-};
-/*
- * è·å–å½“å‰é¡µé¢çš„urlæ•°æ®æ ¹æ®key
- * */
-LeTao.getUrlParam = function(key){
-    var strings = location.search.substr(1).split("&");
-    var value = null;
-    for(var i = 0; i < strings.length; i ++) {
-        var arr = strings[i].split("=");
-        if(arr[0] == key){
-            /*urlcode è½¬ç */
-            value = decodeURI(arr[1]);
-            break;
-        }
-    }
-    return value;
-};
-/*
-* æ ¹æ®æ•°ç»„ä¸­å¯¹è±¡æ•°æ®è·å–ç´¢å¼•
-* */
-LeTao.getIndexFromId = function(arr,id){
-    var index = null;
-    for(var i = 0 ; i < arr.length ; i++){
-        var item = arr[i];
-        if(item && item.id == id){
-            index = i;
-            break;
-        }
-    }
-    return index;
-};
-/*
- * æ ¹æ®æ•°ç»„ä¸­å¯¹è±¡æ•°æ®IDè·å–ç´¢å¼•
- * */
-LeTao.getObjectFromId = function(arr,id){
-    var object = null;
-    for(var i = 0 ; i < arr.length ; i++){
-        var item = arr[i];
-        if(item && item.id == id){
-            object = item;
-            break;
-        }
-    }
-    return object;
-};
+}
