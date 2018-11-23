@@ -32,7 +32,7 @@ lt.ajaxFilter = function(options){
         success:function(data){
             /* error 如果  400  代表未登录 去登录页  携带url*/
             if(data.error == 400){
-                location.href = '/m/user/login.html?returnUrl='+location.href
+                location.href = '/mobile/user/login.html?returnUrl='+location.href
             }else{
                 options.success && options.success(data);
             }

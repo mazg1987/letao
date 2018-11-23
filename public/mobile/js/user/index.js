@@ -15,7 +15,7 @@ $(function(){
             dataType:'json',
             success:function(data){
                 if(data.success){
-                    location.href = '/m/user/login.html';
+                    location.href = '/mobile/user/login.html';
                 }
             }
         });
