@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0"/>
+		<!--删除默认的苹果工具栏和菜单栏，当我们需要显示工具栏和菜单栏时，这个行meta就不用加了，默认就是显示。这个在safari中不起作用，当将网页加入主屏之后可以看到效果-->
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<!--ios顶部状态栏的样式 黑色-->
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<link type="image/x-icon" rel="shortcut icon" href="images/favicon.ico">
+		<link rel="stylesheet" href="assets/mui/css/mui.min.css">
+		<link rel="stylesheet" href="assets/fa/css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/common.css">
+		<link rel="stylesheet" href="css/product.css">
+		<title>商品详情</title>
+	</head>
+	<body>
+		<div class="lt_container">			
+			<!--快捷键 mHeader-->
+            <header class="mui-bar mui-bar-nav">
+                <h1 class="mui-title">商品详情</h1>
+                <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="javascript:history.back();"></a>
+            	<a class="mui-icon mui-pull-right mui-icon-reload" href="javascript:;"></a>
+            </header>
+            
+
+            <div class="lt_content">
+                <div class="lt_wrapper">
+                	<div class="mui-scroll-wrapper">
+                		<div class="mui-scroll">
+                			<!--匡威三星标1970s converse复刻 142334c 144757c三星标黑色高帮 有两个图片-->
+	                        <div class="mui-slider">
+						        <div class="mui-slider-group mui-slider-loop">
+						            <div class="mui-slider-item mui-slider-item-duplicate">
+						                <a href="javascript:;"><img src="/mobile/images/detail.jpg" /></a>
+						            </div>
+					                <div class="mui-slider-item">
+					                    <a href="javascript:;"><img src="/mobile/images/product.jpg" /></a>
+					                </div>
+					                <div class="mui-slider-item">
+					                    <a href="javascript:;"><img src="/mobile/images/detail.jpg" /></a>
+					                </div>
+						            <div class="mui-slider-item mui-slider-item-duplicate">
+						                <a href="javascript:;"><img src="/mobile/images/product.jpg" /></a>
+						            </div>
+						        </div>
+						        <div class="mui-slider-indicator">
+							        <div class="mui-indicator mui-active"></div>
+							        <div class="mui-indicator"></div>
+							    </div>
+						    </div>
+						    <!--名称-->
+						    <div class="lt_item">
+						        <strong class="mui-ellipsis-2">匡威三星标1970s converse复刻 142334c 144757c三星标黑色高帮</strong>
+						    </div>
+						    <!--价格-->
+						    <div class="lt_item">
+						        价格：
+						        <span class="now">&yen;499.1</span> <del class="old">&yen;888.1</del>
+						    </div>
+						    <!--尺码-->
+						    <div class="lt_item">
+						        尺码：
+						        <span class="size">40</span>
+						        <span class="size">41</span>
+						        <span class="size">42</span>
+						        <span class="size">43</span>
+						        <span class="size">44</span>
+						    </div>
+						    <!--数量-->
+						    <div class="lt_item">
+						        数量：
+						        <div class="mui-numbox" data-numbox-min="1" data-numbox-max="20">
+						            <button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+						            <input class="mui-input-numbox" type="number" value="1">
+						            <button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+						        </div>
+						        <span class="num">剩余数量：20 双</span>
+						    </div>
+						    <!--描述-->
+						    <div class="lt_item">
+						        详情：描述</span>
+						    </div>
+		                </div>
+                	</div>
+                </div>
+            </div>
+			<div class="lt_trade">
+		        <a href="user/cart.html" class="mui-btn mui-btn-link">去购物车</a>
+		        <div class="mui-pull-right">
+		            <a href="javascript:;" class="mui-btn mui-btn-danger">加入购物车</a>
+		            <a href="javascript:;" class="mui-btn mui-btn-warning">立即购买</a>
+		        </div>
+		    </div>
+		
+		</div>
+	</body>
+	
+	
+	<script type="text/html" id="detail">
+		
+		<div class="mui-slider">        
+			{{if pic.length==0}}
+				<div class="mui-slider-group mui-slider-loop">
+					<div class="mui-slider-item mui-slider-item-duplicate">
+		                <a href="javascript:;"><img src="/mobile/images/none.png" /></a>
+		            </div>
+		            <div class="mui-slider-item">
+	                    <a href="javascript:;"><img src="/mobile/images/none.png" /></a>
+	                </div>
+	                <div class="mui-slider-item mui-slider-item-duplicate">
+		                <a href="javascript:;"><img src="/mobile/images/none.png" /></a>
+		            </div>
+		        </div>   
+		        
+	            <div class="mui-slider-indicator">
+			        <div class="mui-indicator mui-active"></div>
+			    </div>
+			{{else}}
+				<div class="mui-slider-group mui-slider-loop">
+		            <div class="mui-slider-item mui-slider-item-duplicate">
+		                <a href="javascript:;"><img src="{{pic[pic.length-1].picAddr}}" /></a>
+		            </div>
+		            {{each pic as value i}}
+		                <div class="mui-slider-item">
+		                    <a href="javascript:;"><img src="{{value.picAddr}}" /></a>
+		                </div>
+	                {{/each}}
+		            <div class="mui-slider-item mui-slider-item-duplicate">
+		                <a href="javascript:;"><img src="{{pic[0].picAddr}}" /></a>
+		            </div>
+		        </div>
+		        <div class="mui-slider-indicator">
+		        	{{each pic as value i}}
+			        	<div class="mui-indicator {{i==0?'mui-active':''}}"></div>
+			        {{/each}}
+			    </div>
+			{{/if}}
+		</div>
+		
+		<!--名称-->
+	    <div class="lt_item">
+	        <strong class="mui-ellipsis-2">{{proName}}</strong>
+	    </div>
+	    <!--价格-->
+	    <div class="lt_item">
+	        价格：
+	        <span class="now">&yen;{{price}}</span> <del class="old">&yen;{{oldPrice}}</del>
+	    </div>
+	    <!--尺码-->
+	    <div class="lt_item">
+	        尺码：
+	        {{each size as value i}}
+	        <span class="size">{{value}}</span>
+	        {{/each}}
+	    </div>
+	    <!--数量-->
+	    <div class="lt_item">
+	        数量：
+	        <div class="mui-numbox" data-numbox-min="1" data-numbox-max="{{num}}">
+	            <button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+	            <input class="mui-input-numbox" type="number" value="1">
+	            <button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+	        </div>
+	        <span class="num">剩余数量：{{num}} 双</span>
+	    </div>
+	    <!--描述-->
+	    <div class="lt_item">
+	        详情：{{proDesc}}</span>
+	    </div>
+	</script>
+	
+	<script src="assets/mui/js/mui.min.js"></script>
+	<script src="js/common.js"></script>
+	<script src="assets/artTemplate/template.js"></script>
+	<script src="assets/zepto/zepto.min.js"></script>
+	<script src="js/product.js"></script>
+</html>

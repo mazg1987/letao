@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0"/>
+		<!--删除默认的苹果工具栏和菜单栏，当我们需要显示工具栏和菜单栏时，这个行meta就不用加了，默认就是显示。这个在safari中不起作用，当将网页加入主屏之后可以看到效果-->
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<!--ios顶部状态栏的样式 黑色-->
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<link type="image/x-icon" rel="shortcut icon" href="images/favicon.ico">
+		<link rel="stylesheet" href="../assets/mui/css/mui.min.css">
+		<link rel="stylesheet" href="../assets/fa/css/font-awesome.min.css">
+		<link rel="stylesheet" href="../css/common.css">
+		<link rel="stylesheet" href="../css/user/cart.css">
+		<title>购物车</title>
+	</head>
+	<body>
+		<div class="lt_container">			
+			<!--快捷键 mHeader-->
+            <header class="mui-bar mui-bar-nav">
+                <h1 class="mui-title">购物车</h1>
+            </header>
+
+            <div class="lt_content">
+                <div class="lt_wrapper">
+                	<div class="mui-scroll-wrapper">
+                	    <div class="mui-scroll">
+                	        <ul class="mui-table-view">
+    	                        <li class="mui-table-view-cell">
+    	                        	<!--左滑出现编辑和删除按钮-->
+					                <div class="mui-slider-right">
+					                	<!--编辑按钮-->
+					                    <a data-id="1"
+					                       data-size="50"
+					                       data-productSize="40-50"
+					                       data-num="1"
+					                       data-productNum="20"
+					                       class="mui-btn mui-btn-blue mui-icon mui-icon-compose"></a>
+					                    <!--删除按钮-->
+					                    <a data-id="1" class="mui-btn mui-btn-red mui-icon mui-icon-trash"></a>
+					                </div>
+					                <!--单元格内容-->
+					                <div class="mui-slider-handle">
+					                    <div class="mui-table-cell">
+					                        <div class="lt_proImg"><img src="/mobile/images/product.jpg"/></div>
+					                        <div class="lt_proInfo">
+					                            <p class="name mui-ellipsis-2">匡威三星标1970s converse复刻 142334c 144757c三星标黑色高帮</p>
+					                            <p>
+					                                <span class="price">&yen;888.1</span>
+					                                <span class="oldPrice">&yen;499.1</span>
+					                                <span class="num">1双</span>
+					                            </p>
+					                            <p><span class="size">鞋码：50</span></p>
+					                            <input data-num="1"
+					                                   data-price="499.1"
+					                                   type="checkbox"/>
+					                        </div>
+					                    </div>
+					                </div>
+					            </li>
+                	        </ul>
+                	    </div>
+                	</div>
+                </div>
+            </div>
+
+			<!--lt_cart不需要区域滚动，所以不需要放在lt_content中-->
+			<div class="lt_cart">
+		        <div>订单总金额：&yen;<span>00.00</span></div>
+		        <a href="#">生成订单</a>
+		    </div> 
+
+            <!--快捷键mTabbar-->
+            <nav class="mui-bar mui-bar-tab">
+                <a class="mui-tab-item" href="../index.html"> 
+                    <span class="mui-icon mui-icon mui-icon-home"></span>
+                    <span class="mui-tab-label">首页</span>
+                </a>
+                <a class="mui-tab-item" href="../category.html">
+                    <span class="mui-icon mui-icon-bars"></span>
+                    <span class="mui-tab-label">分类</span>
+                </a>
+                
+                <!--MUI指font-awesome字体-->
+                <a class="mui-tab-item mui-active" href="cart.html">
+                    <span class="mui-icon fa fa-shopping-cart"></span>
+                    <span class="mui-tab-label">购物车</span>
+                </a>
+                <a class="mui-tab-item" href="index.html">
+                    <span class="mui-icon fa fa-user"></span>
+                    <span class="mui-tab-label">会员中心</span>
+                </a>
+            </nav>
+		</div>
+	</body>
+	
+	<script src="../assets/zepto/zepto.min.js"></script>
+	<script src="../assets/mui/js/mui.min.js"></script>
+	<script src="../assets/artTemplate/template.js"></script>
+	<script src="../js/common.js"></script>
+	<script src="../js/user/cart.js"></script>
+	
+	
+	<script type="text/template" id="cart">
+		{{if !data}}
+			<li class="mui-table-view-cell">
+	            <div class="mui-table-cell">
+	                <a class="mui-btn mui-btn-link" href="../search.html">购物车空的去添加。</a>
+	            </div>
+	        </li>
+		{{else}}
+			{{each data as value i}}
+				<li class="mui-table-view-cell">
+	                <div class="mui-slider-right">
+	                    <a data-id="{{value.id}}"
+	                       data-size="{{value.size}}"
+	                       data-productSize="{{value.productSize}}"
+	                       data-num="{{value.num}}"
+	                       data-productNum="{{value.productNum}}"
+	                       class="mui-btn mui-btn-blue mui-icon mui-icon-compose"></a>
+	                    <!--删除按钮-->
+	                    <a data-id="{{value.id}}" class="mui-btn mui-btn-red mui-icon mui-icon-trash"></a>
+	                </div>
+	                <!--单元格内容-->
+	                <div class="mui-slider-handle">
+	                    <div class="mui-table-cell">
+	                        <div class="lt_proImg"><img src="{{value.pic[0].picAddr}}"/></div>
+	                        <div class="lt_proInfo">
+	                            <p class="name mui-ellipsis-2">{{value.proName}}</p>
+	                            <p>
+	                                <span class="price">&yen;{{value.oldPrice}}</span>
+	                                <span class="oldPrice">&yen;{{value.price}}</span>
+	                                <span class="num">{{value.num}}双</span>
+	                            </p>
+	                            <p><span class="size">鞋码：{{value.size}}</span></p>
+	                            <input data-num="{{value.num}}"
+	                                   data-price="{{value.price}}"
+	                                   type="checkbox"/>
+	                        </div>
+	                    </div>
+	                </div>
+	            </li>
+			{{/each}}
+		{{/if}}	
+	</script>
+	
+	
+	<script type="text/template" id="edit">
+	    <div class="lt_cart_edit">
+	        <strong>尺码：</strong>
+	        {{each productsize as value}}	        
+	       		<span class="{{value==size?'now':''}}" >{{value}}</span>
+	        {{/each}}
+	    </div>
+	    <div class="lt_cart_edit">
+	        <strong>数量：</strong>
+	        <div class="mui-numbox" data-numbox-min="1" data-numbox-max="{{productnum}}">
+	            <button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+	            <input class="mui-input-numbox" type="number" value="{{num}}">
+	            <button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+	        </div>
+	    </div>
+	</script>
+</html>

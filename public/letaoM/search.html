@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0"/>
+		<!--删除默认的苹果工具栏和菜单栏，当我们需要显示工具栏和菜单栏时，这个行meta就不用加了，默认就是显示。这个在safari中不起作用，当将网页加入主屏之后可以看到效果-->
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<!--ios顶部状态栏的样式 黑色-->
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<link type="image/x-icon" rel="shortcut icon" href="images/favicon.ico">
+		<link rel="stylesheet" href="assets/mui/css/mui.min.css">
+		<link rel="stylesheet" href="assets/fa/css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/common.css">
+		<link rel="stylesheet" href="css/search.css">
+		<title>搜索中心</title>
+	</head>
+	<body>
+		<div class="lt_container">			
+			<!--快捷键 mHeader-->
+            <header class="mui-bar mui-bar-nav">
+                <h1 class="mui-title">搜索中心</h1>
+                <!--这边暂时用history.back() 替换，在MUI的plus环境下，也可以用下面这种方案：            
+                	var h = plus.webview.getWebviewById("index.html");            
+               		plus.webview.show( h );     --> 
+                <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="javascript:history.back();"></a>
+            </header>
+
+            <div class="lt_content">
+                <div class="lt_wrapper">
+                	<div class="mui-scroll-wrapper">
+                		<div class="mui-scroll">
+		                    <!--搜索表单-->
+		                    <div class="lt_search">
+		                        <form action="javascript:;">
+		                            <input class="search_input" type="search" placeholder="请输入搜索关键字"/>
+		                            <a class="search_btn" href="javascript:;">搜索</a>
+		                        </form>
+		                    </div>
+		                    <!--搜索历史-->
+		                    <div class="lt_history">
+		                       <!--动态渲染-->
+	                            <div class="mui-clearfix">
+	                           		<span class="mui-pull-left">搜索历史</span>
+							        <span class="mui-pull-right fa fa-trash">清空记录</span>
+							    </div>
+						        <ul>
+						            <li><a href="searchList.html?key=aa">aa</a><span data-index="1" class="mui-icon mui-icon-closeempty"></span></li>
+						        	<li><a href="searchList.html?key=bb">bb</a><span data-index="0" class="mui-icon mui-icon-closeempty"></span></li>
+						        	<li><a href="searchList.html?key=aa">aa</a><span data-index="1" class="mui-icon mui-icon-closeempty"></span></li>
+						        	<li><a href="searchList.html?key=bb">bb</a><span data-index="0" class="mui-icon mui-icon-closeempty"></span></li>
+						        </ul>
+		                    </div>
+		                </div>
+                	</div>
+                </div>
+            </div>
+		</div>
+	</body>
+	
+	
+	<!--准备模板引擎-->
+	<script type="text/template" id="historyTpl">
+	    <div class="mui-clearfix">
+	    	{{if list.length == 0}}
+	    		<span class="mui-pull-left">没有搜索历史记录</span>
+	    	{{else}}
+	    		<span class="mui-pull-left">搜索历史</span>
+	            <span class="mui-pull-right fa fa-trash">清空记录</span>
+	    	{{/if}}
+	    </div>
+	    
+	    <ul>
+	    	{{each list as value i}}
+            	<li><a href="searchList.html?key={{value}}">{{value}}</a><span data-index="{{i}}" class="mui-icon mui-icon-closeempty"></span></li>
+            {{/each}}
+        <ul>
+	</script>
+	
+	
+	<script src="assets/mui/js/mui.min.js"></script>
+	<script src="js/common.js"></script>
+	<script src="assets/artTemplate/template.js"></script>
+	<script src="assets/zepto/zepto.min.js"></script>
+	<script src="js/search.js"></script>
+	
+	
+
+</html>

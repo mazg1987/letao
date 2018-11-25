@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0"/>
+		<!--删除默认的苹果工具栏和菜单栏，当我们需要显示工具栏和菜单栏时，这个行meta就不用加了，默认就是显示。这个在safari中不起作用，当将网页加入主屏之后可以看到效果-->
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<!--ios顶部状态栏的样式 黑色-->
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<link type="image/x-icon" rel="shortcut icon" href="images/favicon.ico">
+		<link rel="stylesheet" href="assets/mui/css/mui.min.css">
+		<link rel="stylesheet" href="assets/fa/css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/common.css">
+		<link rel="stylesheet" href="css/category.css">
+		<title>分类</title>
+	</head>
+	<body>
+		<div class="lt_container">			
+			<!--快捷键 mHeader-->
+            <header class="mui-bar mui-bar-nav">
+                <h1 class="mui-title">分类</h1>
+                <a href="search.html"><span class="mui-pull-right mui-icon mui-icon-search"></span></a>
+            </header>
+
+            <div class="lt_content">
+                <div class="lt_wrapper">
+                	<div class="mui-scroll">
+                    <!--一级分类-->
+                    <div class="cate_left">
+                        <ul>
+                            <li class="now"><a href="javascript:;" data-id="1">运动馆</a></li>
+                        	<li class=""><a href="javascript:;" data-id="2">女士馆</a></li>
+                        	<li class=""><a href="javascript:;" data-id="3">男士馆</a></li>
+                        	<li class=""><a href="javascript:;" data-id="4">帆布馆</a></li>
+                        </ul>
+                    </div>
+                    <!--二级分类-->
+                    <div class="cate_right">
+                        <ul>
+                            <li><a href="javascript:;"><img src="/mobile/images/brand1.png" alt=""><p>耐克</p></a></li>
+    						<li><a href="javascript:;"><img src="/mobile/images/brand1.png" alt=""><p>耐克</p></a></li>
+                        </ul>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <!--快捷键mTabbar-->
+            <nav class="mui-bar mui-bar-tab">
+                <a class="mui-tab-item" href="index.html"> 
+                    <span class="mui-icon mui-icon mui-icon-home"></span>
+                    <span class="mui-tab-label">首页</span>
+                </a>
+                <a class="mui-tab-item mui-active" href="category.html">
+                    <span class="mui-icon mui-icon-bars"></span>
+                    <span class="mui-tab-label">分类</span>
+                </a>
+                
+                <!--MUI指font-awesome字体-->
+                <a class="mui-tab-item" href="user/cart.html">
+                    <span class="mui-icon fa fa-shopping-cart"></span>
+                    <span class="mui-tab-label">购物车</span>
+                </a>
+                <a class="mui-tab-item" href="user/index.html">
+                    <span class="mui-icon fa fa-user"></span>
+                    <span class="mui-tab-label">会员中心</span>
+                </a>
+            </nav>
+		</div>
+	</body>
+	
+	<script src="assets/mui/js/mui.min.js"></script>
+	<script src="js/common.js"></script>
+	<script src="assets/artTemplate/template.js"></script>
+	<script src="assets/zepto/zepto.min.js"></script>
+	<script src="js/category.js"></script>
+	
+	<script type="text/template" id="firstTemplate">
+	    {{each rows as value i}}
+	    	<li class="{{i==0?'active':''}}"><a href="javascript:;" data-id="{{value.id}}">{{value.categoryName}}</a></li>
+	  	{{/each}}
+	</script>
+	<script type="text/template" id="secondTemplate">
+		{{if total==0}}
+			<p>当前分类没有数据</p>
+		{{else}}
+			{{each rows as value i}}
+				<li><a href="javascript:;"><img src="{{value.brandLogo}}" alt=""><p>{{value.brandName}}</p></a></li>
+			{{/each}}
+		{{/if}}
+	</script>
+</html>

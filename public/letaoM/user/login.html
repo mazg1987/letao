@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+		<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0"/>
+		<!--删除默认的苹果工具栏和菜单栏，当我们需要显示工具栏和菜单栏时，这个行meta就不用加了，默认就是显示。这个在safari中不起作用，当将网页加入主屏之后可以看到效果-->
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<!--ios顶部状态栏的样式 黑色-->
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<link type="image/x-icon" rel="shortcut icon" href="images/favicon.ico">
+		<link rel="stylesheet" href="../assets/mui/css/mui.min.css">
+		<link rel="stylesheet" href="../assets/fa/css/font-awesome.min.css">
+		<link rel="stylesheet" href="../css/common.css">
+		<title>登陆页面</title>
+	</head>
+	<body>
+		<div class="lt_container">			
+			<!--快捷键 mHeader-->
+            <header class="mui-bar mui-bar-nav">
+                <h1 class="mui-title">用户登陆</h1>
+            </header>
+
+            <div class="lt_content">
+                <div class="lt_wrapper">
+                	<div class="mui-scroll-wrapper">
+                	    <div class="mui-scroll">
+                	        <form class="mui-input-group">
+                	            <div class="mui-input-row">
+                	                <label>用户名</label>
+                	                <input name="username" type="text" placeholder="请输入用户名">
+                	            </div>
+                	            <div class="mui-input-row">
+	                                <label>密码</label>
+	                                <input name="password" type="password" class="mui-input-password"  placeholder="请输入密码" >
+	                            </div>
+	                            <div class="mui-button-row">
+	                                <button type="button" class="mui-btn mui-btn-primary">登录</button>&nbsp;&nbsp;
+	                                <button type="reset" class="mui-btn mui-btn-danger">重置</button>
+	                            </div>
+                	        </form>
+                	        <div class="mui-text-right">
+	                            <a class="mui-btn mui-btn-link" href="#">免费注册</a>
+	                        </div>
+                	    </div>
+                	</div>
+                </div>
+            </div>
+            
+             <!--快捷键mTabbar-->
+            <nav class="mui-bar mui-bar-tab">
+                <a class="mui-tab-item" href="../index.html"> 
+                    <span class="mui-icon mui-icon mui-icon-home"></span>
+                    <span class="mui-tab-label">首页</span>
+                </a>
+                <a class="mui-tab-item" href="../category.html">
+                    <span class="mui-icon mui-icon-bars"></span>
+                    <span class="mui-tab-label">分类</span>
+                </a>
+                
+                <!--MUI指font-awesome字体-->
+                <a class="mui-tab-item" href="cart.html">
+                    <span class="mui-icon fa fa-shopping-cart"></span>
+                    <span class="mui-tab-label">购物车</span>
+                </a>
+                <a class="mui-tab-item" href="index.html">
+                    <span class="mui-icon fa fa-user"></span>
+                    <span class="mui-tab-label">会员中心</span>
+                </a>
+            </nav>
+		</div>
+	</body>
+	
+	<script src="../assets/mui/js/mui.min.js"></script>
+	<script src="../js/common.js"></script>
+	<script src="../assets/zepto/zepto.min.js"></script>
+	<script src="../js/user/login.js"></script>
+</html>
